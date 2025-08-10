@@ -1,0 +1,12 @@
+# Only sync build/web and backend folders
+/*
+!/build/web/
+!/backend/
+!README.md
+!.gitignore
+!pubspec.yaml
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
