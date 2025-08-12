@@ -107,8 +107,19 @@ class OpportunityManager {
     }
     
     public function create() {
-        $auth = Auth::requireAuth();
         $input = json_decode(file_get_contents('php://input'), true);
+        // Always set imageUrl directly from input or POST
+        $imageUrl = null;
+        if (isset($input['image_url'])) {
+            $imageUrl = trim($input['image_url']);
+        } elseif (isset($_POST['image_url'])) {
+            $imageUrl = trim($_POST['image_url']);
+        }
+        if (empty($imageUrl)) {
+            $imageUrl = "no image";
+        }
+        // Print imageUrl before insert (after setting)
+        echo '<pre>imageUrl before insert: ' . var_export($imageUrl, true) . "</pre>\n";
         
         $required = ['title', 'description', 'type'];
         foreach ($required as $field) {
@@ -128,21 +139,19 @@ class OpportunityManager {
             $priority = 'medium';
         }
         
-        // Handle image upload if present
-        $imageUrl = null;
-        if (isset($_FILES['image'])) {
-            try {
-                $imageUrl = FileUpload::uploadImage($_FILES['image']);
-            } catch (Exception $e) {
-                Response::error($e->getMessage(), 400);
-            }
-        }
+        // Handle image upload if present, otherwise use image_url from JSON
+        // Always set imageUrl directly from input or POS
         
+        // Guarantee $imageUrl is never NULL
+        if (empty($imageUrl)) {
+            $imageUrl = "no image";
+        }
+
+         //$imageUrl =  "https://kapp.khulumaeswatini.com/app".$imageUrl;
         $sql = "INSERT INTO opportunities (title, description, category_id, type, company_name, location, 
                 salary_range, deadline, application_link, contact_email, contact_phone, requirements, 
                 benefits, image_url, priority, status, admin_id) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        
         $params = [
             trim($input['title']),
             trim($input['description']),
@@ -163,8 +172,9 @@ class OpportunityManager {
             $auth['id']
         ];
         
-        $stmt = $this->pdo->prepare($sql);
-        $stmt->execute($params);
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->execute($params);
+    // echo '<pre>SQL error info: ' . var_export($stmt->errorInfo(), true) . "</pre>\n";
         
         $opportunityId = $this->pdo->lastInsertId();
         

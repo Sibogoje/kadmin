@@ -2,7 +2,8 @@
 // upload_opportunity_image.php
 // Handles image upload for opportunities
 
-$targetDir = '../../client/uploads/opportunities/';
+//$targetDir = 'https://kapp.khulumaeswatini.com/uploads/';
+$targetDir = $_SERVER['DOCUMENT_ROOT'] . 'public_html/client/build/web/uploads/';
 if (!file_exists($targetDir)) {
     mkdir($targetDir, 0777, true);
 }
@@ -19,7 +20,7 @@ if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $newFileName = uniqid('opp_', true) . '.' . $fileExt;
         $destPath = $targetDir . $newFileName;
         if (move_uploaded_file($fileTmpPath, $destPath)) {
-            $url = '/client/uploads/opportunities/' . $newFileName;
+            $url = 'https://kapp.khulumaeswatini.com/uploads/' . $newFileName;
             $response = ["success" => true, "url" => $url];
         } else {
             $response["error"] = "Failed to move uploaded file.";
