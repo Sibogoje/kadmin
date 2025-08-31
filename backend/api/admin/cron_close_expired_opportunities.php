@@ -2,12 +2,13 @@
 // CRON: Close opportunities past their deadline
 // Place this file in backend/api/admin/ and set up a cron job to run it daily
 
-require_once '../../config/cors.php';
+
+// Use the shared backend config
 require_once '../../config/config.php';
 
 try {
-    $pdo = new PDO(DB_DSN, DB_USER, DB_PASSWORD);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    // Use the global $pdo from config.php
+    global $pdo;
 
     $today = date('Y-m-d');
     $sql = "UPDATE opportunities SET status = 'expired' WHERE status != 'expired' AND deadline IS NOT NULL AND deadline < ?";
