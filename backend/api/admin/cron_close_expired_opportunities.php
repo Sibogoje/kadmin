@@ -3,8 +3,8 @@
 // Place this file in backend/api/admin/ and set up a cron job to run it daily
 
 
-// Use the shared backend config
-require_once '../../config/config.php';
+// Use the shared backend config (robust path)
+require_once __DIR__ . '/../../config/config.php';
 
 try {
     // Use the global $pdo from config.php
