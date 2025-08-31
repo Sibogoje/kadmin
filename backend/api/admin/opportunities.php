@@ -17,7 +17,7 @@ class OpportunityManager {
         $auth = Auth::requireAuth();
         
         $page = (int)($_GET['page'] ?? 1);
-        $limit = (int)($_GET['limit'] ?? 20);
+        $limit = (int)($_GET['limit'] ?? 1000);
         $status = $_GET['status'] ?? '';
         $category = $_GET['category'] ?? '';
         $type = $_GET['type'] ?? '';
