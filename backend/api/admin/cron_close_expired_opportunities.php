@@ -2,7 +2,8 @@
 // CRON: Close opportunities past their deadline
 // Place this file in backend/api/admin/ and set up a cron job to run it daily
 
-require_once __DIR__ . '/../../../backend/api/admin/config/config.php';
+require_once '../../config/cors.php';
+require_once '../../config/config.php';
 
 try {
     $pdo = new PDO(DB_DSN, DB_USER, DB_PASSWORD);
