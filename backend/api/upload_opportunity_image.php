@@ -3,7 +3,7 @@
 // Handles image upload for opportunities
 require_once '../config/cors.php';
 //$targetDir = 'https://kapp.khulumaeswatini.com/uploads/';
-$targetDir = $_SERVER['DOCUMENT_ROOT'] . 'public_html/client/build/web/uploads/';
+$targetDir = $_SERVER['DOCUMENT_ROOT'] . '/client/build/web/uploads/';
 if (!file_exists($targetDir)) {
     mkdir($targetDir, 0777, true);
 }
