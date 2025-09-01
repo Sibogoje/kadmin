@@ -119,7 +119,7 @@ class OpportunityManager {
             $imageUrl = "no image";
         }
         // Print imageUrl before insert (after setting)
-        echo '<pre>imageUrl before insert: ' . var_export($imageUrl, true) . "</pre>\n";
+       // echo '<pre>imageUrl before insert: ' . var_export($imageUrl, true) . "</pre>\n";
         
         $required = ['title', 'description', 'type'];
         foreach ($required as $field) {
